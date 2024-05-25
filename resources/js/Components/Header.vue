@@ -6,7 +6,11 @@ import { useToggle, useDark } from '@vueuse/core'
 import { useTranslations } from '../Compostables/translate'
 
 const shouldShow = ref(true)
-
+const routes = {
+    '/' : 'home',
+    '/about-me': 'about',
+    '/road': 'road'
+}
 const toggle = () => {
     shouldShow.value = !shouldShow.value
 }
@@ -22,6 +26,12 @@ const toggleDark = useToggle(isDark)
 const showOnDesktopOrWhenMobileHidden = computed(() => {
     return !isMobile.value || (isMobile.value && !shouldShow.value)
 })
+onMounted(()=>{
+    let path = window.location.pathname;
+    let navId = routes[path];
+    console.log(navId);
+    document.getElementById(navId).classList.add('white');
+})
 
 function onResize() {
     isMobile.value = window.innerWidth < 768
@@ -31,8 +41,8 @@ function onResize() {
 
 <template>
     <nav
-        class="bg-transparent   px-2 sm:px-4 py-2.5 rounded fixed w-full">
-        <div class="container flex flex-wrap justify-between items-center mx-auto">
+        class="nav md:px-2 sm:px-4 md:py-2.5 rounded fixed w-full">
+        <div class="md:container md:flex md:flex-wrap md:justify-between md:items-center md:mx-auto">
             <div class="flex items-center">
                 <button
                     id="menu-toggle"
@@ -52,12 +62,13 @@ function onResize() {
                     </svg>
                 </button>
             </div>
-            <div v-if="showOnDesktopOrWhenMobileHidden" class="w-full md:block md:w-auto" id="mobile-menu">
+            <div v-if="showOnDesktopOrWhenMobileHidden" class="w-full bg-black md:bg-transparent md:block md:w-auto" id="mobile-menu">
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                     <li>
                         <a
                             href="/"
-                            class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:p-0 dark:text-white"
+                            id="home"
+                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         >
                             {{ translate('home') }}
                         </a>
@@ -65,7 +76,8 @@ function onResize() {
                     <li>
                         <a
                             href="/about-me"
-                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 0 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            id="about"
+                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         >
                             {{ translate('about') }}
                         </a>
@@ -73,6 +85,7 @@ function onResize() {
                     <li>
                         <a
                             href="/road"
+                            id="road"
                             class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         >
                             {{ translate('road') }}
@@ -91,7 +104,7 @@ function onResize() {
                             </svg>
                         </button>
                         <div v-if="settingsVisible"
-                             class="absolute right-0 z-10 mt-2 w-48 rounded-md shadow-sm bg-white dark:bg-gray-700">
+                             class="absolute left-0 w-full md:right-0 z-10 md:mt-2 md:w-48 md:rounded-md shadow-sm bg-white dark:bg-gray-700">
                             <ul class="py-1 divide-y divide-gray-200 dark:divide-gray-600">
                                 <li>
                                     <div class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -123,5 +136,10 @@ function onResize() {
 </template>
 
 <style scoped>
-
+.nav {
+    z-index: 999999;
+}
+.white{
+    color: aliceblue;
+}
 </style>

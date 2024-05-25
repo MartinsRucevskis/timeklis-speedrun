@@ -2,18 +2,25 @@
 import { nextTick, onMounted } from 'vue'
 import Template from '../../Template.vue'
 import { useTranslations } from '../../Compostables/translate'
+import { useYears } from '../../Compostables/years'
 const { translate, locale, setLocale } = useTranslations();
+
+const items = useYears().years;
 </script>
 
 <template>
     <Template>
         <div class="container mx-auto min-w-full">
-            <div class="grid grid-cols-1 md:grid-cols-8 gap-0 min-h-screen">
-                <div class="section-2 md:col-span-3 bg-secondary-light dark:bg-secondary-dark p-4 w-full">
-                    {{translate('road')}}
+            <div class="gap-0 grid  grid-cols-1 min-h-screen">
+                <div class="text-center	bg-secondary-light dark:bg-secondary-dark p-4 w-full" v-for="year in items">
+                    <h3 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+                        {{year.year}}
+                    </h3>
+                    <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+                        {{translate(year.long_descr)}}
+                    </p>
+
                 </div>
-                <div class="section-3 md:col-span-4 bg-primary-light dark:bg-primary-dark p-4 w-full">Content 3</div>
-                <div class="section-1 bg-third-light dark:bg-third-dark p-6 w-full md:order-first">Content 1</div>
             </div>
         </div>
     </Template>
