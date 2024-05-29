@@ -13,14 +13,15 @@ use Inertia\Inertia;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return Inertia::render('Home/Main', []);
-});
+Route::middleware('cache.headers:no_store')->group(function() {
+    Route::get('/', function () {
+        return Inertia::render('Home/Main', []);
+    });
 //Route::get('/about-me', function () {
 //    return Inertia::render('AboutMe/Main', []);
 //});
 
-Route::get('/road', function () {
-    return Inertia::render('Road/Main', []);
+    Route::get('/road', function () {
+        return Inertia::render('Road/Main', []);
+    });
 });
