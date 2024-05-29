@@ -1,7 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, ref, onUnmounted } from 'vue'
 
-const { translate, locale, setLocale } = useTranslations()
+const { translate, locale, isEn, isLv, setLocale } = useTranslations()
 import { useToggle, useDark } from '@vueuse/core'
 import { useTranslations } from '../Compostables/translate'
 
@@ -27,7 +27,6 @@ const toggleSettings = () => {
     settingsVisible.value = !settingsVisible.value
 }
 const settingsVisible = ref(false)
-const isMobile = ref(window.innerWidth < 768)
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
@@ -38,12 +37,13 @@ onMounted(()=>{
     let path = window.location.pathname;
     let navId = routes[path];
     console.log(navId);
-    document.getElementById(navId).classList.add('white');
+    document.getElementById(navId).classList.add('text-white');
+    document.getElementById(navId).classList.add('dark:text-white');
+    document.getElementById(navId).classList.remove('text-stone-300');
 })
-
-function onResize() {
-    isMobile.value = window.innerWidth < 768
-}
+const isMobile = computed(()=>{
+    return window.innerWidth < 768;
+})
 
 </script>
 
@@ -55,7 +55,7 @@ function onResize() {
                 <button
                     id="menu-toggle"
                     type="button"
-                    class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+                    class="inline-flex items-center p-2 ml-3 text-sm text-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
                     @click="toggle"
                 >
                     <span class="sr-only">Open main menu</span>
@@ -76,7 +76,7 @@ function onResize() {
                         <a
                             href="/"
                             id="home"
-                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            class="block py-2 pr-4 pl-3 text-stone-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         >
                             {{ translate('home') }}
                         </a>
@@ -94,7 +94,7 @@ function onResize() {
                         <a
                             href="/road"
                             id="road"
-                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            class="block py-2 pr-4 pl-3 text-stone-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         >
                             {{ translate('road') }}
                         </a>
@@ -126,11 +126,11 @@ function onResize() {
                                         </label>
                                     </div>
                                     <div class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                        <label class="inline-flex items-center w-full cursor-pointer dark:text-white light:text-black">
-                                            <button @click="setLocale('lv')" style="margin-right: 8px">
+                                        <label class="inline-flex items-center w-full cursor-pointer">
+                                            <button @click="setLocale('lv')" :class="isLv ? 'dark:text-white light:text-black' : 'text-stone-400' " style="margin-right: 8px">
                                                 Lv
                                             </button>
-                                            <button @click="setLocale('en')">En</button>
+                                            <button @click="setLocale('en')"  :class="isEn ? 'dark:text-white light:text-black' : 'text-stone-400'">En</button>
                                         </label>
                                     </div>
                                 </li>

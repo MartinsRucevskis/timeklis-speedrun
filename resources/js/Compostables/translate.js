@@ -1,4 +1,4 @@
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue'
 import { useStorage } from '@vueuse/core'
 
 const translations = {
@@ -129,6 +129,12 @@ export function useTranslations() {
         currentTranslations.value = translations[newLocale] || {};
     }, {immediate: true});
 
+    const isEn = computed(()=>{
+        return locale.value === 'en';
+    })
+    const isLv = computed(()=>{
+        return locale.value === 'lv';
+    })
     const setLocale = (newLocale) => {
         locale.value = newLocale;
     };
@@ -137,5 +143,5 @@ export function useTranslations() {
         return currentTranslations.value[key] || key;
     };
 
-    return { translate, locale, setLocale };
+    return { translate, locale, isEn, isLv ,setLocale };
 }
