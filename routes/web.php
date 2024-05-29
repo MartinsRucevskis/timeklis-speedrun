@@ -17,9 +17,9 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home/Main', []);
 });
-Route::get('/about-me', function () {
-    return Inertia::render('AboutMe/Main', []);
-});
+//Route::get('/about-me', function () {
+//    return Inertia::render('AboutMe/Main', []);
+//});
 
 Route::get('/road', function () {
     return Inertia::render('Road/Main', []);

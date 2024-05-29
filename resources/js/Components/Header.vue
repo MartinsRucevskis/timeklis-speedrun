@@ -12,6 +12,14 @@ const routes = {
     '/road': 'road'
 }
 const toggle = () => {
+    if (!shouldShow.value){
+        document.getElementById('navBar').classList.remove('h-full');
+        document.getElementById('navBar').classList.remove('bg-black');
+
+    } else{
+        document.getElementById('navBar').classList.add('h-full');
+        document.getElementById('navBar').classList.add('bg-black');
+    }
     shouldShow.value = !shouldShow.value
 }
 
@@ -40,7 +48,7 @@ function onResize() {
 </script>
 
 <template>
-    <nav
+    <nav id="navBar"
         class="nav md:px-2 sm:px-4 md:py-2.5 rounded fixed w-full">
         <div class="md:container md:flex md:flex-wrap md:justify-between md:items-center md:mx-auto">
             <div class="flex items-center">
@@ -62,7 +70,7 @@ function onResize() {
                     </svg>
                 </button>
             </div>
-            <div v-if="showOnDesktopOrWhenMobileHidden" class="w-full bg-black md:bg-transparent md:block md:w-auto" id="mobile-menu">
+            <div v-if="showOnDesktopOrWhenMobileHidden" class="w-full h-full md:h-auto bg-black md:bg-transparent md:block md:w-auto" id="mobile-menu">
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                     <li>
                         <a
@@ -73,15 +81,15 @@ function onResize() {
                             {{ translate('home') }}
                         </a>
                     </li>
-                    <li>
-                        <a
-                            href="/about-me"
-                            id="about"
-                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            {{ translate('about') }}
-                        </a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a-->
+<!--                            href="/about-me"-->
+<!--                            id="about"-->
+<!--                            class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"-->
+<!--                        >-->
+<!--                            {{ translate('about') }}-->
+<!--                        </a>-->
+<!--                    </li>-->
                     <li>
                         <a
                             href="/road"
@@ -104,7 +112,7 @@ function onResize() {
                             </svg>
                         </button>
                         <div v-if="settingsVisible"
-                             class="absolute left-0 w-full md:right-0 z-10 md:mt-2 md:w-48 md:rounded-md shadow-sm bg-white dark:bg-gray-700">
+                             class="absolute w-full md:right-0 z-10 md:mt-2 md:w-48 md:rounded-md shadow-sm bg-white dark:bg-gray-700">
                             <ul class="py-1 divide-y divide-gray-200 dark:divide-gray-600">
                                 <li>
                                     <div class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -118,7 +126,7 @@ function onResize() {
                                         </label>
                                     </div>
                                     <div class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                        <label class="inline-flex items-center w-full cursor-pointer">
+                                        <label class="inline-flex items-center w-full cursor-pointer dark:text-white light:text-black">
                                             <button @click="setLocale('lv')" style="margin-right: 8px">
                                                 Lv
                                             </button>
