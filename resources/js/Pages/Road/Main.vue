@@ -47,7 +47,7 @@ onBeforeUnmount(()=>
 
 <template>
     <Template>
-        <img id="preview-image" :src="imgSrc.value" class="hidden fixed bg-amber-500 m-auto left-0 right-0 top-0 bottom-0" />
+        <img id="preview-image" :src="imgSrc.value" class="hidden bg-amber-500 rounded-lg" />
         <div class="container mx-auto min-w-full">
             <div class="gap-0 grid  grid-cols-1 min-h-screen">
                 <div class="bg-secondary-light dark:bg-secondary-dark p-4 w-full" v-for="year in items">
@@ -78,18 +78,16 @@ onBeforeUnmount(()=>
         width: 70vw;
         height: 70vw;
         position: fixed;
-        top: 30%;
-        left: 30%;
-        transform: translate(-50%, -50%);
+        top: 30vw;
+        left: 15vw;
     }
 
     @media screen and (orientation: landscape) {
         height: 60vh;
         width: 60vh;
         position: fixed;
-        top: 40%;
-        left: 40%;
-        transform: translate(-50%, -50%);
+        top: 20vh;
+        left: 32%;
     }
 }
 /* ===== Scrollbar CSS ===== */
