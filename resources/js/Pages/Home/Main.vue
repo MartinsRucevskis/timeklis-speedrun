@@ -15,7 +15,7 @@ const { translate, locale, setLocale } = useTranslations();
                     <h3 class="md:pt-40 pt-10 mb-4 text-2xl font-bold leading-none tracking-tight md:text-3xl lg:text-4xl text-white">
                         {{translate('greet')}}
                     </h3>
-                    <p class="align-middle text-xl leading-relaxed text-slate-300 md:pt-20 md:pl-10 md:pr-10">{{translate('lorem_long')}}</p>
+                    <p class="align-middle text-xl leading-relaxed text-slate-300 light:text-slate-50 md:pt-20 md:pl-10 md:pr-10">{{translate('lorem_long')}}</p>
                 </div>
                     <YearCarousel />
                 <div class="section-1 justify-center bg-third-light dark:bg-third-dark p-1 w-full md:order-first grid auto-cols-max content-end">

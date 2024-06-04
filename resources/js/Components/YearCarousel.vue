@@ -103,7 +103,7 @@ onMounted(() => {
                     class="mb-10 transition-all ease-in-out duration-300 flex justify-items-end">
                     <li class="text-right static pb-5 pl-10 border-b-4 border-slate-600  w-full justify-items-end"
                         v-for="item in items" :key="item.year" :id="'list-'+item.year" style="width:100px;">
-                        <p class="relative pl-10">{{ item.year }}</p>
+                        <a :href="'/road#road-' + item.year" class="relative pl-10">{{ item.year }}</a>
                         <span class="absolute top-8 mr-10"><span :id="'year-'+item.year" class="mt-1 dot"></span></span>
                     </li>
                     <li class="text-right static pb-5 pl-10 border-b-4 border-dashed border-slate-600  w-full justify-items-end"
@@ -120,7 +120,7 @@ onMounted(() => {
                         <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
                     </svg>
                 </button>
-                <p class="font-bold text-white">{{ currentYear }}</p>
+                <a :href="'/road#road-'+currentYear" class="font-bold text-white text-3xl">{{ currentYear }}</a>
                 <button class="pl-2" type="button" @click="nextSlide" data-carousel-prev>
                     <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
                          fill="#e8eaed">
@@ -128,7 +128,7 @@ onMounted(() => {
                     </svg>
                 </button>
             </div>
-            <div class="rounded-lg flex justify-center items-center mt-10">
+            <div class="rounded-lg text-xl flex justify-center items-center mt-10">
             {{translate(yearDescription)}}
             </div>
             </div>

@@ -1,6 +1,12 @@
 import { ref, watch, onMounted, computed } from 'vue'
 import { useStorage } from '@vueuse/core'
+const imageSpan = (text, alt, src) => {
+    return '<span class="renderImage coolHower font-bold" data-alt="'+alt+'" data-src="'+fullImage(src)+'">'+text+'</span>'
+}
 
+const fullImage = (name) => {
+    return 'images/' + name + '.jpg';
+}
 const translations = {
     lv: {
         greet: 'Čau!',
@@ -34,14 +40,14 @@ const translations = {
         descr_2022: 'Cītīgi mācos',
         descr_2023: 'Ne tik cītīgi mācos',
         descr_2024: 'Maģistra any % speedruns',
-        long_descr_2001: 'Piedzimu septembrī, Tukuma slimnīcā. Svēru kādus 3.5 kilogramus. Īpaši daudz no šī notikuma neatceros.',
+        long_descr_2001: 'Piedzimu septembrī, ' +imageSpan('Tukuma slimnīcā', 'Balta 5 stāvu ēka ar sarkaniem akcentiem', 'slimnica')+ '. Svēru kādus 3.5 kilogramus. Īpaši daudz no šī notikuma neatceros.',
         long_descr_2002: 'Neko daudz no šī gada neatceros. Pieļauju, ka sāku staigāt.',
         long_descr_2003: 'Man palika 2 gadi, lielie svētki!',
         long_descr_2004: '-',
         long_descr_2005: '-',
         long_descr_2006: 'Māsa nedeva spēlēt telefonu. Paņēmu to un izvārīju zupā ar granti. Māsai vairs nebija telefona 😼',
         long_descr_2007: 'Vienīgas kas nāk atmiņā, ka gāju bērnu dārzā un mums bija cita audzinātaja. Vienmēr šķitis, ka viņa mani ienīda.',
-        long_descr_2008: 'Sāku iet Tukuma 2. pamatskolā. Man spieda spēlēt klavieres, tas nekad nepadevās.',
+        long_descr_2008: 'Sāku iet Tukuma 2. pamatskolā. Man spieda spēlēt '+imageSpan('klavieres', 'Brūnas firmas "Rīga" klavieres ar atvērtu vāku', 'klavieres')+', tas nekad nepadevās.',
         long_descr_2009: 'Šķiet, ka iestājos sporta skolā. Īsti neatceros. Pirmstam dejoju tautu dejas kuras ienīdu. Man viņās spieda iet, jo māsa bija gājusi.',
         long_descr_2010: 'Man nav ne mazākās nojausmas ko šajā laikā darīju, atceros, ka braucu uz kaut kādām olimpiādēm. Pārējais ir tīts miglā.',
         long_descr_2011: 'Pilnīgs tukšums.',
@@ -53,8 +59,8 @@ const translations = {
         long_descr_2017: 'Pabeidzu pamatskolu un iestājos ģimnāzijā.',
         long_descr_2018: 'Noteikti labs gads',
         long_descr_2019: 'Šķiet, ka nekas īpašs nenotika.',
-        long_descr_2020: 'Noliku auto tiesības. Iegādājos sev auto kuru izvazāju pa grāvjiem ziemā. Biju aizbraucis uz eiropas parlamentu. Daudz nekas ko šeit pieminēt laikam nav.',
-        long_descr_2021: 'Iestājos RTU. Vēlējos kļūt par autobūves inženieri, taču manas cerības sagrāva Ilmārs Iltiņš u.c. Tā vietā, lai pasniegtu matemātiku viņš strīdējās ar sievu un vērtēja -3 līdz 8. Būvmehāniku attalināti pasniedza caur nokia talruni.',
+        long_descr_2020: 'Noliku auto tiesības. Iegādājos sev '+ imageSpan('auto', 'sudraba krāsas auto', 'beha')+' kuru '+ imageSpan(' izvazāju pa grāvjiem ziemā', 'sudrabotas krāsas auto ieslīdējis grāvī', 'gravis')+'. Biju aizbraucis uz '+imageSpan('eiropas parlamentu', 'eiropas parlamenta ēkas iekšiene', 'eiropa')+'. Daudz nekas ko šeit pieminēt laikam nav.',
+        long_descr_2021: 'Iestājos RTU. Vēlējos kļūt par autobūves inženieri, taču manas cerības sagrāva '+ imageSpan('Ilmārs Iltiņš', 'Sad math profersor', 'iltins')+' u.c. Tā vietā, lai pasniegtu matemātiku viņš strīdējās ar sievu un vērtēja -3 līdz 8. Būvmehāniku attalināti pasniedza caur nokia talruni.',
         long_descr_2022: 'Izstājos no RTU. Sapratu, ka nav vērts pavadīt 4 gadus lecot cauri elles lokiem un mēginot dabūt kaut 4 pie pasniedzējiem no akmens laikemeta. Programmēju mazliet vidusskolā, nebija pārāk slikti, algas arī ok un iestājos LU programmēšanā.',
         long_descr_2023: 'Šķiet, ka nekas īpašs šeit nenotika.',
         long_descr_2024: 'Esmu 3. kursā. Dabūju mazo papīru programmēšanā.',
@@ -94,14 +100,14 @@ const translations = {
         descr_2022: 'Studying heavily',
         descr_2023: 'Studying not so heavily',
         descr_2024: 'Masters any % speedrun',
-        long_descr_2001: 'Born in September at Tukuma Hospital. Weighed about 3.5 kilograms. Don\'t remember much about this event.',
+        long_descr_2001: 'Born in September at '+ imageSpan('Tukuma Hospital', 'White 5 story building with red accents.', 'slimnica')+'. Weighed about 3.5 kilograms. Don\'t remember much about this event.',
         long_descr_2002: 'Don\'t remember much about this year. Guess I started walking.',
         long_descr_2003: 'Turned 2, a big celebration!',
         long_descr_2004: '-',
         long_descr_2005: '-',
         long_descr_2006: 'Sister wouldn\'t let me play with her phone. Took it and boiled it in soup with barley. Sister didn\'t have a phone anymore ',
         long_descr_2007: 'Only thing I remember is going to kindergarten and having a different teacher. It always seemed like she hated me.',
-        long_descr_2008: 'Started going to Tukuma 2nd Primary School. Forced to play the piano, never got the hang of it.',
+        long_descr_2008: 'Started going to Tukuma 2nd Primary School. Forced to play the '+imageSpan('piano', 'Brown, brand "Rīga" piano with opened hood', 'klavieres')+', never got the hang of it.',
         long_descr_2009: 'Think I enrolled in a sports school. Don\'t really remember. Danced folk dances, which I hated, for my first year. Forced to go because my sister had gone.',
         long_descr_2010: 'Have no idea what I was doing during this time, remember going to some kind of Olympics. The rest is shrouded in fog.',
         long_descr_2011: 'Complete emptiness.',
@@ -113,8 +119,8 @@ const translations = {
         long_descr_2017: 'Graduated from primary school and entered high school.',
         long_descr_2018: 'Definitely a good year',
         long_descr_2019: 'Seems like nothing special happened.',
-        long_descr_2020: 'Got my driver\'s license. Bought myself a car that I drove through the ditches in winter. Had been to the European Parliament. There\'s probably not much else to mention here.',
-        long_descr_2021: 'Entered RTU. Wanted to become an automotive engineer, but my hopes were dashed by Ilmārs Iltiņš et al. Instead of teaching math, he argued with his wife and graded on a scale of -3 to 8. Building mechanics was taught remotely through a Nokia phone.',
+        long_descr_2020: 'Got my driver\'s license. Bought myself a '+ imageSpan('car', 'silver color car', 'beha')+' that I '+ imageSpan('drove through the ditches in winter', 'silver color car inside a ditch', 'gravis')+'. Had been to the '+imageSpan('European Parliament', 'inside of European Parliaments building', 'eiropa')+'. There\'s probably not much else to mention here.',
+        long_descr_2021: 'Entered RTU. Wanted to become an automotive engineer, but my hopes were dashed by '+ imageSpan('Ilmārs Iltiņš', 'Sad math profersor', 'iltins')+' et al. Instead of teaching math, he argued with his wife and graded on a scale of -3 to 8. Building mechanics was taught remotely through a Nokia phone.',
         long_descr_2022: 'Dropped out of RTU. Realized that it\'s not worth spending 4 years jumping through hoops and trying to get at least 4 from Stone Age professors. Programmed a little in high school, it wasn\'t too bad, the salaries are also ok and I entered LU programming.',
         long_descr_2023: 'Seems like nothing special happened here.',
         long_descr_2024: 'In my 3rd year. Got my little paper in programming.'
@@ -122,8 +128,8 @@ const translations = {
 };
 
 export function useTranslations() {
-    const locale = useStorage('locale', 'lv');
-    const currentTranslations = ref({});
+    const locale = useStorage('locale', 'lv')
+    const currentTranslations = ref({})
 
     watch(locale, (newLocale) => {
         currentTranslations.value = translations[newLocale] || {};
@@ -137,6 +143,7 @@ export function useTranslations() {
     })
     const setLocale = (newLocale) => {
         locale.value = newLocale;
+        location.reload();
     };
 
     const translate = (key) => {

@@ -37,9 +37,12 @@ onMounted(()=>{
     let path = window.location.pathname;
     let navId = routes[path];
     console.log(navId);
-    document.getElementById(navId).classList.add('text-white');
-    document.getElementById(navId).classList.add('dark:text-white');
-    document.getElementById(navId).classList.remove('text-stone-300');
+    let nav = document.getElementById(navId);
+    if(nav!= null && nav.classList != undefined && nav.classList != null) {
+        document.getElementById(navId).classList.add('text-white');
+        document.getElementById(navId).classList.add('dark:text-white');
+        document.getElementById(navId).classList.remove('text-stone-300');
+    }
 })
 const isMobile = computed(()=>{
     return window.innerWidth < 768;

@@ -1,34 +1,65 @@
 <script setup>
-import { nextTick, onMounted } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import Template from '../../Template.vue'
 import { useTranslations } from '../../Compostables/translate'
 import { useYears } from '../../Compostables/years'
 const { translate, locale, setLocale } = useTranslations();
 
+const imgSrc = ref('');
 const items = useYears().years;
+const isHidden = ref(true);
+const hasClicked = ref(false);
 const dividesByZero = (year) => {
     return parseInt(year) % 2 ===0;
 }
+onMounted(() => {
+    const imagePreviewSpans = document.querySelectorAll('.renderImage');
+    imagePreviewSpans.forEach(span => {
+        span.addEventListener('click', (event) =>
+        {
+            const clickedSpan = event.target;
+            const imageURL = clickedSpan.dataset.src;
+            const imageAlt = clickedSpan.dataset.alt;
+            new Promise((resolve) => {
+                document.getElementById('preview-image').classList.remove('hidden');
+                document.getElementById('preview-image').onload = resolve;
+                document.getElementById('preview-image').setAttribute('src', imageURL);
+                document.getElementById('preview-image').setAttribute('alt', imageAlt);
+            }).finally(() => {
+                isHidden.value = false;
+            });
+        });
+    });
+
+    document.addEventListener('click',(event) => {
+        if (!isHidden.value && !event.srcElement.classList.contains('renderImage')){
+            document.getElementById('preview-image').classList.add('hidden');
+            isHidden.value = true;
+        }
+    });
+})
+onBeforeUnmount(()=>
+    document.removeEventListener('click', this.onClick)
+)
+
+
 </script>
 
 <template>
     <Template>
+        <img id="preview-image" :src="imgSrc.value" class="hidden fixed bg-amber-500 m-auto left-0 right-0 top-0 bottom-0" />
         <div class="container mx-auto min-w-full">
             <div class="gap-0 grid  grid-cols-1 min-h-screen">
                 <div class="bg-secondary-light dark:bg-secondary-dark p-4 w-full" v-for="year in items">
-                    <h3 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+                    <h3 :id="'road-' + year.year" class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
                         {{year.year}}
                     </h3>
                     <div :class="year.image===''? '' : 'flex'" v-if="dividesByZero(year.year)">
-                        <p id="coolId" class="text-center text-white mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-                            {{translate(year.long_descr)}}
+                        <p id="coolId" class="text-center text-white mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400" v-html="translate(year.long_descr)">
                         </p>
-                        <img :alt="translate(year.alt)" class="h-auto max-w-xs"  v-if="year.image !== ''" src="//flowbite.com/docs/images/examples/image-1@2x.jpg" />
                     </div>
                     <div :class="year.image===''? '' : 'flex'"  v-if="!dividesByZero(year.year)">
-                        <img :alt="translate(year.alt)" class="h-auto max-w-xs"  v-if="year.image !== ''" src="//flowbite.com/docs/images/examples/image-1@2x.jpg" />
-                        <p id="coolId" class="text-center text-white mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-                            {{translate(year.long_descr)}}
+                        <p id="coolId" class="text-center text-white mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"  v-html="translate(year.long_descr)">
                         </p>
                     </div>
                 </div>
@@ -38,6 +69,29 @@ const dividesByZero = (year) => {
 </template>
 
 <style>
+.coolHower:hover{
+    cursor: pointer;
+}
+#preview-image{
+
+    @media screen and (orientation: portrait) {
+        width: 70vw;
+        height: 70vw;
+        position: fixed;
+        top: 30%;
+        left: 30%;
+        transform: translate(-50%, -50%);
+    }
+
+    @media screen and (orientation: landscape) {
+        height: 60vh;
+        width: 60vh;
+        position: fixed;
+        top: 40%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+    }
+}
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
